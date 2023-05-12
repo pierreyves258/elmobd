@@ -1,4 +1,4 @@
-module github.com/rzetterberg/elmobd
+module github.com/pierreyves258/elmobd
 
 go 1.13
 
