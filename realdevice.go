@@ -203,7 +203,7 @@ func (dev *RealDevice) Reset() error {
 	}
 
 	// Device can identified itself in first or second line
-	if !(strings.HasPrefix(dev.outputs[0], "ELM327") || (len(dev.outputs) > 1 && strings.HasPrefix(dev.outputs[1], "ELM327"))) {
+	if !(strings.Contains(dev.outputs[0], "ELM327") || (len(dev.outputs) > 1 && strings.Contains(dev.outputs[1], "ELM327"))) {
 		output := dev.outputs[0]
 		if len(dev.outputs) > 1 {
 			output += " " + dev.outputs[1]
@@ -364,6 +364,7 @@ func (dev *RealDevice) processResult(result bytes.Buffer) error {
 
 	for p := range parts {
 		tmp := strings.Trim(parts[p], "\r ")
+		tmp = strings.Trim(tmp, "\n")
 
 		if tmp == "" {
 			continue

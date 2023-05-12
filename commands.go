@@ -362,6 +362,33 @@ func (cmd *EngineLoad) SetValue(result *Result) error {
 	return nil
 }
 
+// FuelRate represents a command that checks the fuel rate in l/h
+type FuelRate struct {
+	baseCommand
+	IntCommand
+}
+
+// NewFuel creates a new Fuel with the correct parameters.
+func NewFuelRate() *FuelRate {
+	return &FuelRate{
+		baseCommand{SERVICE_01_ID, 0x5e, 2, "fuel_rate"},
+		IntCommand{},
+	}
+}
+
+// SetValue processes the byte array value into the right float value.
+func (cmd *FuelRate) SetValue(result *Result) error {
+	payload, err := result.PayloadAsByte()
+
+	if err != nil {
+		return err
+	}
+
+	cmd.Value = int(payload)
+
+	return nil
+}
+
 // Fuel represents a command that checks the fuel quantity in percent
 //
 // Min: 0.0
